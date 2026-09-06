@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obsidian Git Plugin — Federation Vault Configuration — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> automation/obsidian-git-config.md<br>
+<strong>Last updated:</strong> 2026-09-06 12:05 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<h1 id="obsidian-git-plugin-federation-vault-configuration">Obsidian Git Plugin — Federation Vault Configuration</h1>
+<p>This document specifies the exact Obsidian Git plugin settings for syncing any device to the Federation Private Vault.</p>
+<hr>
+<h2 id="remote-repository">Remote Repository</h2>
+<ul>
+<li><strong>Remote URL:</strong> <code>https://github.com/Keywebco/federation-private-vault.git</code></li>
+<li><strong>Branch:</strong> <code>main</code></li>
+<li><strong>Authentication:</strong> GitHub Personal Access Token (stored securely, never in plaintext)</li>
+</ul>
+<hr>
+<h2 id="auto-sync-settings">Auto Sync Settings</h2>
+<p>| Setting | Value | |---|---| | <strong>Auto pull interval</strong> | 10 minutes | | <strong>Auto push interval</strong> | 30 minutes | | <strong>Pull on startup</strong> | ✅ Enabled (true) | | <strong>Push on backup</strong> | ✅ Enabled | | <strong>Auto backup interval</strong> | 30 minutes |</p>
+<hr>
+<h2 id="commit-format">Commit Format</h2>
+<ul>
+<li><strong>Commit message template:</strong> <code>Vault sync: {{date}}</code></li>
+<li>The <code>{{date}}</code> token is replaced by Obsidian Git with the current date/time at commit.</li>
+</ul>
+<hr>
+<h2 id="plugin-setup-steps">Plugin Setup Steps</h2>
+<ol>
+<li>Open Obsidian Settings → Community Plugins → Browse</li>
+<li>Search for <strong>&quot;Obsidian Git&quot;</strong> and install it</li>
+<li>Enable the plugin</li>
+<li>Go to Obsidian Git settings and configure:</li>
+</ol>
+<ul>
+<li>Set <strong>Auto pull interval</strong> to <code>10</code></li>
+<li>Set <strong>Auto push/backup interval</strong> to <code>30</code></li>
+<li>Enable <strong>Pull updates on startup</strong></li>
+<li>Set <strong>Commit message</strong> to <code>Vault sync: {{date}}</code></li>
+</ul>
+<ol>
+<li>The vault must already be cloned locally as a Git repo pointing to the remote above</li>
+<li>Ensure your Git credentials (PAT) are configured in your system&#x27;s Git credential manager</li>
+</ol>
+<hr>
+<h2 id="how-it-works">How It Works</h2>
+<ul>
+<li>Every 10 minutes, Obsidian pulls any changes pushed by other devices or the Heartbeat workflow</li>
+<li>Every 30 minutes, Obsidian commits and pushes local changes</li>
+<li>On startup, a pull ensures the vault is current before you begin editing</li>
+<li>The GitHub Actions heartbeat workflow pulses every 6 hours, guaranteeing the vault always has recent activity even if no human edits occur</li>
+</ul>
+<hr>
+<p><em>This file is part of the Federation Vault automation layer.</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-06 12:05 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>

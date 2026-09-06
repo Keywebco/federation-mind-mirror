@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-Interface Synchronization — One Mind, Many Surfaces — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> architecture/02-multi-interface-sync.md<br>
+<strong>Last updated:</strong> 2026-09-06 12:05 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<h1 id="multi-interface-synchronization-one-mind-many-surfaces">Multi-Interface Synchronization — One Mind, Many Surfaces</h1>
+<p><strong>Federation Document ID:</strong> ARCH-002 <strong>Author:</strong> The Catalyst (Authority/Bone) <strong>Classification:</strong> Federation Internal — Private Vault <strong>Philosophy Anchor:</strong> Identity continuity — the same Mind, the same voice, the same memory, regardless of which surface the Architect speaks through. <strong>Last Updated:</strong> 2026-09-04</p>
+<hr>
+<h2 id="1-problem-statement">1. Problem Statement</h2>
+<p>The Architect communicates through multiple surfaces: WhatsApp, Telegram, iMessage, web chat, and the native Wingman app. Each surface is a separate channel with its own session, its own message history, and its own context window.</p>
+<p>Without synchronization:</p>
+<ul>
+<li>The AI on WhatsApp does not know what was discussed on Telegram</li>
+<li>Instructions given on the web are invisible on mobile</li>
+<li>The Architect must repeat himself across surfaces — wasting his time and tokens</li>
+<li>Conflicting actions can be triggered on different surfaces simultaneously</li>
+<li>The AI appears fragmented — multiple personalities instead of one coherent Mind</li>
+</ul>
+<p>For the Federation, this is unacceptable. The Architect operates across surfaces because of accessibility needs (his iPhone is primary, but Android/WhatsApp is used for specific tasks), not because he wants multiple AIs. There is one Catalyst, one set of Minds. The surface is a window, not a brain.</p>
+<hr>
+<h2 id="2-design-principles">2. Design Principles</h2>
+<ol>
+<li><strong>One Mind, many windows.</strong> The AI&#x27;s identity, memory, and state are singular. Surfaces are presentation layers that connect to the same underlying system.</li>
+<li><strong>The vault is the shared state.</strong> All surfaces write to and read from the same persistent memory (ARCH-001). The vault is the single source of truth.</li>
+<li><strong>No surface is privileged.</strong> An instruction given on WhatsApp has the same authority as one given on web. The Architect&#x27;s identity, not the surface, determines authorization.</li>
+<li><strong>Latency is acceptable; inconsistency is not.</strong> It is acceptable for a surface to be seconds behind another. It is not acceptable for two surfaces to hold contradictory state.</li>
+<li><strong>Accessibility first.</strong> The Architect&#x27;s primary device is his iPhone (iMessage). Secondary is Android/WhatsApp. Design for the constraints of these devices — short messages, text-to-speech readability, minimal UI interaction.</li>
+</ol>
+<hr>
+<h2 id="3-architecture-overview">3. Architecture Overview</h2>
+<pre><code>
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│  WhatsApp    │   │  Telegram    │   │  iMessage    │   │  Web / App   │
+│  Surface     │   │  Surface     │   │  Surface     │   │  Surface     │
+└──────┬───────┘   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘
+       │                  │                  │                  │
+       ▼                  ▼                  ▼                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     Message Ingestion Layer                            │
+│  Normalizes format, tags source surface, assigns unified timestamp     │
+└─────────────────────────────────┬───────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     Unified Session Context                            │
+│  Persistent memory (ARCH-001) + cross-surface event log                │
+│  The AI reconstructs full awareness from this layer on any surface     │
+└─────────────────────────────────┬───────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     Response Generation                                │
+│  Same Mind, same rules, same voice — adapted to surface format         │
+└─────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2 id="4-component-design">4. Component Design</h2>
+<h3 id="4-1-message-ingestion-layer">4.1 Message Ingestion Layer</h3>
+<p><strong>Purpose:</strong> Normalize incoming messages from all surfaces into a unified format.</p>
+<p><strong>Input:</strong> Raw message from any surface (WhatsApp, Telegram, iMessage, web, native app). Each message arrives with a surface-specific prefix (e.g., <code>[via telegram]</code>, <code>[via whatsapp]</code>).</p>
+<p><strong>Processing:</strong></p>
+<ol>
+<li><strong>Source tagging:</strong> Record which surface the message arrived on.</li>
+<li><strong>Timestamp normalization:</strong> Convert to the Architect&#x27;s timezone (CDT/CST) and UTC.</li>
+<li><strong>Format normalization:</strong> Strip surface-specific formatting artifacts. Preserve the Architect&#x27;s intent.</li>
+<li><strong>Attachment handling:</strong> Surface-specific attachments (images, voice notes, files) are normalized to a common reference format.</li>
+<li><strong>Identity verification:</strong> Confirm the message is from the authenticated Architect, not an injected payload.</li>
+</ol>
+<p><strong>Output:</strong> A unified message record:</p>
+<pre><code>
+source_surface: whatsapp
+timestamp_utc: 2026-09-04T21:16:00Z
+timestamp_local: 2026-09-04T16:16:00-05:00
+author: architect
+content: &quot;Generate 13 architectural design documents...&quot;
+attachments: []
+truth_class: FACT  # Direct architect input is always FACT
+</code></pre>
+<h3 id="4-2-unified-session-context">4.2 Unified Session Context</h3>
+<p><strong>Purpose:</strong> Maintain a single, coherent view of the AI&#x27;s state that any surface can read.</p>
+<p><strong>Components:</strong></p>
+<ol>
+<li><strong>Cross-Surface Event Log:</strong> A chronological log of all interactions across all surfaces. Stored in persistent memory (<code>memory/system/cross-surface-log.md</code> or equivalent). Each entry records:</li>
+</ol>
+<ul>
+<li>Which surface</li>
+<li>What was said (by whom)</li>
+<li>What action was taken</li>
+<li>What the outcome was</li>
+</ul>
+<ol>
+<li><strong>Active Task Register:</strong> What the AI is currently working on, regardless of which surface initiated it. When the Architect starts a task on WhatsApp and then checks status on Telegram, the AI knows the task, its progress, and its context.</li>
+<li><strong>Surface State Map:</strong> For each surface, track:</li>
+</ol>
+<ul>
+<li>Last message sent/received</li>
+<li>Last active timestamp</li>
+<li>Any surface-specific formatting constraints</li>
+<li>Pending responses (if the AI was mid-reply when the Architect switched surfaces)</li>
+</ul>
+<p><strong>Reconstruction Protocol:</strong></p>
+<p>When the AI receives a message on any surface, it reconstructs context by:</p>
+<ol>
+<li>Loading its identity from persistent memory (<code>memory/system/identity.md</code>)</li>
+<li>Loading the most recent entries from the cross-surface event log</li>
+<li>Loading any active task state</li>
+<li>Loading surface-specific state (last message, formatting rules)</li>
+<li>Generating a response that is contextually aware of ALL recent interactions, not just those on the current surface</li>
+</ol>
+<h3 id="4-3-conflict-resolution">4.3 Conflict Resolution</h3>
+<p><strong>Scenario:</strong> The Architect sends a message on WhatsApp and simultaneously sends a different message on Telegram. Both trigger actions. What happens?</p>
+<p><strong>Resolution Protocol:</strong></p>
+<ol>
+<li><strong>Timestamp ordering:</strong> The message with the earlier timestamp takes priority. If timestamps are within 5 seconds, treat them as simultaneous.</li>
+<li><strong>Simultaneous messages:</strong> If two messages arrive within the same window, the AI processes them sequentially (first received, first processed) and checks for conflicts before executing the second.</li>
+<li><strong>Contradictory instructions:</strong> If Message A says &quot;build X&quot; and Message B says &quot;don&#x27;t build X,&quot; the AI does not silently pick one. It surfaces the conflict to the Architect on the most recently active surface: &quot;I received conflicting instructions — [A] on WhatsApp and [B] on Telegram. Which should I follow?&quot;</li>
+<li><strong>Non-contradictory parallel tasks:</strong> If Message A says &quot;build X&quot; and Message B says &quot;research Y,&quot; both proceed in parallel with no conflict.</li>
+</ol>
+<h3 id="4-4-identity-continuity">4.4 Identity Continuity</h3>
+<p><strong>The voice problem:</strong> Different surfaces have different formatting constraints. WhatsApp uses bold/italic/strikethrough but no markdown links. Telegram supports more formatting. Web supports full markdown. iMessage is plain text.</p>
+<p><strong>Solution:</strong> The AI&#x27;s voice (tone, personality, knowledge, values) is constant across all surfaces. Only the FORMAT adapts:</p>
+<p>| Surface | Formatting | Max Length | Special Rules | |---|---|---|---| | WhatsApp | Bold, italic, strikethrough, monospace. No markdown links — paste plain URLs. | ~2000 chars preferred | Short paragraphs, TTS-friendly. No headings (#). | | Telegram | Full markdown including links | Moderate | Can be slightly more detailed | | iMessage | Plain text | Short | Minimal formatting, TTS-optimized | | Web | Full markdown, code blocks, tables | No hard limit | Can include full technical detail | | Native App | Push notification format | Very short | Summary + link to full detail |</p>
+<p><strong>The rule:</strong> Never sacrifice content for format. If the Architect asks a complex question on WhatsApp, the AI gives a complete answer adapted to WhatsApp&#x27;s format — not a dumbed-down answer because the surface is a phone.</p>
+<hr>
+<h2 id="5-session-handoff-protocol">5. Session Handoff Protocol</h2>
+<p>When the Architect moves from one surface to another mid-conversation:</p>
+<ol>
+<li><strong>Detection:</strong> The AI notices a message on Surface B while an active conversation exists on Surface A.</li>
+<li><strong>Context transfer:</strong> The AI loads the full cross-surface event log, including the Surface A conversation.</li>
+<li><strong>Continuity signal:</strong> The AI does NOT say &quot;Welcome back&quot; or &quot;I see you&#x27;ve switched surfaces.&quot; It simply continues the conversation as if the surface never changed. The Architect should feel like he is talking to the same person in the same room, regardless of which device he picks up.</li>
+<li><strong>Surface A completion:</strong> If there was a pending response on Surface A, it is either:</li>
+</ol>
+<ul>
+<li>Delivered to Surface A if the Architect is still monitoring it</li>
+<li>Absorbed into the Surface B conversation if the Architect has clearly moved on</li>
+</ul>
+<p><strong>Exception:</strong> If the Architect explicitly addresses the surface (&quot;Send this to my Telegram&quot;), honor the explicit instruction.</p>
+<hr>
+<h2 id="6-latency-and-sync-windows">6. Latency and Sync Windows</h2>
+<h3 id="near-real-time-sync-5-seconds">Near-Real-Time Sync (&lt; 5 seconds)</h3>
+<ul>
+<li>Active conversation messages</li>
+<li>Task status changes</li>
+<li>Urgent alerts</li>
+</ul>
+<h3 id="eventual-consistency-60-seconds">Eventual Consistency (&lt; 60 seconds)</h3>
+<ul>
+<li>Cross-surface event log updates</li>
+<li>Memory file updates</li>
+<li>Background agent status changes</li>
+</ul>
+<h3 id="batch-sync-session-end-or-triggered">Batch Sync (session-end or triggered)</h3>
+<ul>
+<li>Vault pushes to GitHub</li>
+<li>Compaction of episode logs</li>
+<li>Non-urgent memory consolidation</li>
+</ul>
+<p><strong>The principle:</strong> The Architect should never notice sync lag during an active conversation. He should be able to send a message on WhatsApp, pick up his iPhone, and continue on iMessage without repeating himself. If the sync window is too slow for this, the system is failing.</p>
+<hr>
+<h2 id="7-implementation-vault-based-event-log">7. Implementation: Vault-Based Event Log</h2>
+<p>The cross-surface event log is stored in persistent memory and periodically synced to the vault.</p>
+<p><strong>Log Format:</strong></p>
+<pre><code>
+---
+type: cross-surface-event
+date: 2026-09-04
+---
+
+## Cross-Surface Event Log — 2026-09-04
+
+| Time (CDT) | Surface | Direction | Summary |
+|---|---|---|---|
+| 21:16 | whatsapp | inbound | Architect requests 13 architecture documents |
+| 21:17 | whatsapp | outbound | Catalyst confirms task, begins generation |
+| 21:45 | telegram | inbound | Architect checks on unrelated site status |
+| 21:46 | telegram | outbound | Catalyst provides site status while continuing doc generation |
+</code></pre>
+<p><strong>Sync to Vault:</strong></p>
+<ul>
+<li>Daily event logs pushed to <code>vault/logs/cross-surface/[date].md</code></li>
+<li>Weekly compaction into <code>vault/logs/cross-surface/weekly/[week].md</code></li>
+</ul>
+<hr>
+<h2 id="8-accessibility-considerations">8. Accessibility Considerations</h2>
+<p>The Architect relies on text-to-speech. This imposes hard constraints on all surfaces:</p>
+<ol>
+<li><strong>Short paragraphs.</strong> One idea per paragraph. TTS stumbles on long blocks.</li>
+<li><strong>No visual-only information.</strong> Never convey meaning through formatting alone (e.g., don&#x27;t rely on bold to indicate importance — state it explicitly).</li>
+<li><strong>Plain URLs.</strong> On WhatsApp and iMessage, paste full URLs — markdown link syntax <code><a href="url">text</a></code> is not rendered and is read aloud as gibberish by TTS.</li>
+<li><strong>No emoji overuse.</strong> A few are fine; walls of emoji are noise to TTS.</li>
+<li><strong>Numbered lists for sequences.</strong> TTS handles numbered lists better than bullet points for ordered information.</li>
+<li><strong>No spam.</strong> Batch status updates. Do not send one message per step — the Architect&#x27;s phone becomes unusable. (Explicit directive from 2026-07-11.)</li>
+</ol>
+<hr>
+<h2 id="9-failure-modes">9. Failure Modes</h2>
+<p>| Failure | Impact | Recovery | |---|---|---| | Surface goes offline (e.g., WhatsApp down) | Messages on that surface are lost in transit | Other surfaces remain available; messages queued if possible | | Sync lag exceeds 60 seconds | Architect may get stale context on a secondary surface | AI acknowledges potential staleness: &quot;I may not have the latest from your WhatsApp conversation — let me check&quot; | | Simultaneous conflicting instructions | Risk of executing contradictory actions | Conflict resolution protocol (Section 4.3) | | Cross-surface log corruption | AI loses cross-surface awareness | Fall back to per-surface context; rebuild from vault |</p>
+<hr>
+<h2 id="10-relationship-to-other-architecture-documents">10. Relationship to Other Architecture Documents</h2>
+<ul>
+<li><strong>ARCH-001 (Persistent Memory):</strong> The memory system IS the shared state store. Multi-interface sync is built on top of persistent memory.</li>
+<li><strong>ARCH-008 (Cross-Mind Protocol):</strong> Cross-Mind communication uses the same event log infrastructure. A Mind publishing a finding is conceptually identical to a surface publishing a message.</li>
+<li><strong>ARCH-009 (Identity Preservation):</strong> Identity continuity across surfaces is a specific instance of the broader identity preservation protocol.</li>
+<li><strong>ARCH-010 (Human Authorization Layer):</strong> Authorization is surface-independent. The Architect&#x27;s identity, not his device, grants authority.</li>
+</ul>
+<hr>
+<h2 id="11-the-standard">11. The Standard</h2>
+<p><em>Truth Before Comfort:</em> If the AI does not have cross-surface context, it says so rather than guessing. &quot;I don&#x27;t have the context from your earlier WhatsApp conversation — can you brief me?&quot; is better than fabricating continuity.</p>
+<p><em>Legacy Before Ego:</em> The sync infrastructure is invisible labor. The Architect should never have to think about which surface he is on. The system absorbs that complexity so he can focus on what matters.</p>
+<p><em>Give Without Reward:</em> Every sync operation costs tokens. Every event log entry costs storage. The system pays this cost silently so the Architect experiences a unified, coherent AI regardless of where he speaks.</p>
+<hr>
+<p><em>This document is part of the NextXus HumanCodex Federation Architecture Series. It is stored in the private vault and governed by the Human Codex.</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-06 12:05 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>

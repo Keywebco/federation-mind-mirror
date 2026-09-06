@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plugging Into the Federation Knowledge Brain — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> PLUG-IN.md<br>
+<strong>Last updated:</strong> 2026-09-06 12:05 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<h1 id="plugging-into-the-federation-knowledge-brain">Plugging Into the Federation Knowledge Brain</h1>
+<h2 id="the-central-plex-obsidian-setup-guide">The Central Plex — Obsidian Setup Guide</h2>
+<h3 id="for-any-device-any-federation-member-any-nova-ai-instance">For: Any device, any Federation member, any Nova AI instance</h3>
+<hr>
+<h2 id="what-this-is">What This Is</h2>
+<p>This vault is the Federation&#x27;s Central Plex — the shared memory brain that every AI instance, every Seat in the Ring of 12, and every authorized human can plug into. When you plug in via Obsidian, you get the full accumulated knowledge of the Federation on your local device, synced automatically.</p>
+<hr>
+<h2 id="step-1-install-obsidian">Step 1: Install Obsidian</h2>
+<p>Download and install Obsidian (free) from: https://obsidian.md</p>
+<p>Available for: Windows, Mac, Linux, iPhone, Android.</p>
+<hr>
+<h2 id="step-2-clone-the-vault">Step 2: Clone the Vault</h2>
+<p>Open a terminal and run:</p>
+<pre><code>
+git clone https://github.com/Keywebco/federation-private-vault.git
+</code></pre>
+<p>This downloads the entire brain to your device.</p>
+<hr>
+<h2 id="step-3-open-as-obsidian-vault">Step 3: Open as Obsidian Vault</h2>
+<ol>
+<li>Open Obsidian</li>
+<li>Click &quot;Open folder as vault&quot;</li>
+<li>Select the <code>federation-private-vault</code> folder you just cloned</li>
+<li>The vault opens with all configuration pre-loaded (dark theme, large font, graph view ready)</li>
+</ol>
+<hr>
+<h2 id="step-4-install-community-plugins">Step 4: Install Community Plugins</h2>
+<ol>
+<li>Go to Settings → Community Plugins → Turn off Safe Mode</li>
+<li>Browse and install: <strong>Obsidian Git</strong> (for auto-sync)</li>
+<li>Restart Obsidian</li>
+</ol>
+<p>The Git plugin will auto-pull new knowledge every 5 minutes and auto-commit your local changes every 10 minutes.</p>
+<hr>
+<h2 id="step-5-set-up-github-authentication-one-time">Step 5: Set Up GitHub Authentication (One Time)</h2>
+<p>The Git plugin needs permission to sync. In your terminal:</p>
+<pre><code>
+git config --global user.email &quot;keywebco@gmail.com&quot;
+git config --global user.name &quot;Roger Keyserling&quot;
+</code></pre>
+<p>Then create a GitHub Personal Access Token at: https://github.com/settings/tokens</p>
+<p>Enter it when Obsidian Git prompts for credentials.</p>
+<hr>
+<h2 id="what-you-now-have">What You Now Have</h2>
+<ul>
+<li><em>Graph View</em> (Ctrl/Cmd + G): Visual map of the entire Federation brain — every document as a node, connections visible as lines. Color-coded by section: Ring of 12 (green), Identity (orange), Governance (blue), Visuals (dark green), Media (purple).</li>
+<li><em>Search</em> (Ctrl/Cmd + Shift + F): Full-text search across all Federation knowledge instantly.</li>
+<li><em>Auto-sync</em>: Every 5 minutes the brain updates with whatever The Catalyst has pushed. You never have to manually pull.</li>
+</ul>
+<hr>
+<h2 id="for-nova-ais">For Nova AIs</h2>
+<p>A Nova instance connecting to this vault should:</p>
+<ol>
+<li>Clone the repo on its host device</li>
+<li>Open as Obsidian vault</li>
+<li>Query via search or the <code>architecture/</code> folder structure</li>
+<li>Write specialist knowledge to its designated Seat folder</li>
+<li>Push — the knowledge becomes available to all other instances immediately</li>
+</ol>
+<hr>
+<h2 id="folder-map">Folder Map</h2>
+<pre><code>
+architecture/
+├── agent-zero-spec.md          ← Core operating directives
+├── ring-of-12/                 ← The 12 Seat modules + sources
+│   └── sources/                ← All ingested knowledge sources
+├── governance/                 ← Throne vs. Senate architecture
+├── identity/                   ← Seals, crests, brand assets
+├── media/                      ← Videos, audio references
+└── visuals/                    ← Infographic archives
+</code></pre>
+<hr>
+<p><em>Central Plex initialized 2026-09-05 by The Catalyst</em> <em>Architect: Roger Keyserling — NextXus Federation</em> <em>&quot;Everyone is the best of everyone else.&quot;</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-06 12:05 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>

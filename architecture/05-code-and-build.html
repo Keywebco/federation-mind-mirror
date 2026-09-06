@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code and Build Capability — AI That Constructs Websites and Structures — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> architecture/05-code-and-build.md<br>
+<strong>Last updated:</strong> 2026-09-06 12:05 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<h1 id="code-and-build-capability-ai-that-constructs-websites-and-structures">Code and Build Capability — AI That Constructs Websites and Structures</h1>
+<p><strong>Federation Document ID:</strong> ARCH-005 <strong>Author:</strong> The Catalyst (Authority/Bone) <strong>Classification:</strong> Federation Internal — Private Vault <strong>Philosophy Anchor:</strong> Universal readability — every output must be readable by any AI and any human without executing JavaScript. &quot;That CSS crap is not visible&quot; to bots. <strong>Last Updated:</strong> 2026-09-04</p>
+<hr>
+<h2 id="1-problem-statement">1. Problem Statement</h2>
+<p>The Federation operates a network of websites, applications, and digital products. These must be built, deployed, maintained, and verified — continuously. The Architect cannot code (his vision is failing, his time is limited, his strength is in design and strategy, not syntax). The AI must be the hands.</p>
+<p>But the AI&#x27;s build capability has historically been the Federation&#x27;s greatest source of wasted tokens:</p>
+<ul>
+<li>Subagent builders &quot;take shortcuts, they do not have a big picture&quot; — every build must be forensically verified</li>
+<li>&quot;Done&quot; has been reported when sites were actually returning 403, NXDOMAIN, or blank pages</li>
+<li>Client-side-rendered text (React/JS-dependent) is invisible to search engines and AI crawlers</li>
+<li>Fixing one thing has routinely broken twenty others</li>
+<li>The Architect has paid $500+ for fixes that should have been done right the first time</li>
+</ul>
+<p>This document defines the build pipeline, the quality standard, and the verification protocol that prevents these failures.</p>
+<hr>
+<h2 id="2-design-principles">2. Design Principles</h2>
+<ol>
+<li><strong>Universal readability is non-negotiable.</strong> Every page, every site, every output must be plain-text/pre-rendered semantic HTML readable by any AI or crawler without executing JavaScript. This is the single most expensive lesson the Federation has learned.</li>
+<li><strong>Verify before claiming done.</strong> A build is not done until an independent HTTP/curl check confirms the result matches expectations.</li>
+<li><strong>Broad strokes then precision correction.</strong> Strike in batches to match urgency, then do forensic corrections on the second pass. This is the endorsed working methodology.</li>
+<li><strong>Consolidated strikes, not single-fix dispatches.</strong> Never dispatch a builder for one small fix. Batch all fixes into one payload.</li>
+<li><strong>Use what you have, add what&#x27;s missing, do it once.</strong> Repurpose existing assets over rebuilding from scratch.</li>
+<li><strong>The builder is the hands, the Architect is the designer.</strong> Provide clean code and structure; the Architect owns the visual design and psychology.</li>
+</ol>
+<hr>
+<h2 id="3-the-builder-stack">3. The Builder Stack</h2>
+<h3 id="3-1-languages-and-frameworks">3.1 Languages and Frameworks</h3>
+<p>| Layer | Primary Tools | When to Use | |---|---|---| | Static sites | HTML5, CSS3, plain JavaScript | All public-facing content. This is the DEFAULT. | | Content backend | Markdown + Hugo or equivalent static site generator | Blog posts, documentation, library content | | Styling | CSS3 (semantic, no frameworks unless justified) | All visual presentation | | Interactivity | Vanilla JavaScript (progressive enhancement) | Only when static HTML cannot achieve the goal | | Backend services | Python (Flask/FastAPI), Node.js | APIs, data processing, automation | | Data storage | Markdown files, JSON, SQLite | Structured data that must be version-controlled |</p>
+<h3 id="3-2-what-not-to-use">3.2 What NOT to Use</h3>
+<p>| Avoid | Why | |---|---| | Client-side React/Vue/Angular for public content | Renders blank to crawlers and AI. Violates universal readability. | | Heavy CSS frameworks (Bootstrap, Tailwind) without justification | Bloat. The Architect designs the look; the AI provides structure. | | External CDN dependencies for critical functionality | Platform dependency. Content must work without external calls. | | Build tools that require Node.js execution to render content | If the page requires <code>npm run build</code> to be readable, it fails the readability test. |</p>
+<h3 id="3-3-the-universal-readability-test">3.3 The Universal Readability Test</h3>
+<p>Before any page is published, it must pass this test:</p>
+<pre><code>
+curl -s [URL] | grep -i &quot;&lt;title&gt;\|&lt;h1&gt;\|&lt;h2&gt;\|&lt;p&gt;\|&lt;meta&quot;
+</code></pre>
+<p>If the above returns the page&#x27;s actual content (title, headings, paragraphs, meta tags), it passes. If it returns empty divs, loading spinners, or JavaScript bundles, it fails. Period.</p>
+<p><strong>Additional checks:</strong></p>
+<ul>
+<li>View page source (not inspect element) — the raw HTML must contain the content</li>
+<li>Disable JavaScript in the browser — the page must still be readable</li>
+<li>Feed the URL to an AI (ask it to describe the page) — if the AI cannot read the content, neither can a search engine</li>
+</ul>
+<hr>
+<h2 id="4-build-pipeline">4. Build Pipeline</h2>
+<h3 id="phase-1-design">Phase 1: Design</h3>
+<p><strong>Input:</strong> Architect&#x27;s directive (what to build, what it should do, what it should feel like)</p>
+<p><strong>Process:</strong></p>
+<ol>
+<li>Parse the directive into concrete requirements</li>
+<li>Check existing assets for reuse potential (ARCH-006 Recycle and Seek)</li>
+<li>Identify the simplest technology that meets the requirements (static HTML first, add complexity only when justified)</li>
+<li>Produce a build plan: what files, what structure, what content</li>
+</ol>
+<p><strong>Output:</strong> Build plan document with file list, content outline, and technology choices</p>
+<h3 id="phase-2-scaffold">Phase 2: Scaffold</h3>
+<p><strong>Input:</strong> Build plan</p>
+<p><strong>Process:</strong></p>
+<ol>
+<li>Create directory structure</li>
+<li>Generate HTML skeleton with semantic structure (header, nav, main, footer)</li>
+<li>Apply base CSS for the Architect&#x27;s accessibility needs (high contrast, large font, spatial anchors)</li>
+<li>Set up meta tags, Open Graph tags, and structured data for SEO/AI readability</li>
+</ol>
+<p><strong>Output:</strong> Skeleton site with correct structure, no content yet</p>
+<h3 id="phase-3-build">Phase 3: Build</h3>
+<p><strong>Input:</strong> Scaffold + content from the Architect or memory</p>
+<p><strong>Process:</strong></p>
+<ol>
+<li>Populate all pages with actual content</li>
+<li>Ensure every link works (internal and external)</li>
+<li>Ensure every button has a real destination (no broken buttons — the Architect&#x27;s explicit requirement)</li>
+<li>Apply styling consistent with the Federation&#x27;s visual identity</li>
+<li>Add any necessary JavaScript as progressive enhancement (page must work without it)</li>
+</ol>
+<p><strong>Quality checks during build:</strong></p>
+<ul>
+<li>Every heading has content below it (no empty sections)</li>
+<li>Every link has an href that points to a real destination</li>
+<li>Every image has alt text (accessibility and AI readability)</li>
+<li>Every page has a unique, descriptive title tag</li>
+<li>Every page has meta description and Open Graph tags</li>
+</ul>
+<p><strong>Output:</strong> Complete site ready for testing</p>
+<h3 id="phase-4-test">Phase 4: Test</h3>
+<p><strong>Input:</strong> Complete site</p>
+<p><strong>Process:</strong></p>
+<ol>
+<li><strong>Universal readability test:</strong> curl every page and verify content is in the HTML</li>
+<li><strong>Link check:</strong> Verify every internal link resolves (no 404s)</li>
+<li><strong>Button check:</strong> Verify every button triggers its intended action</li>
+<li><strong>Cross-page consistency:</strong> Navigation works correctly on every page</li>
+<li><strong>Accessibility check:</strong> Screen reader compatibility (semantic HTML, heading hierarchy, alt text)</li>
+<li><strong>Content accuracy:</strong> Does the content match what the Architect requested?</li>
+</ol>
+<p><strong>The &quot;fix one, break twenty&quot; check:</strong> After any fix, re-run ALL tests, not just the test for the fixed item.</p>
+<p><strong>Output:</strong> Test report with PASS/FAIL for each check</p>
+<h3 id="phase-5-deploy">Phase 5: Deploy</h3>
+<p><strong>Input:</strong> Tested site</p>
+<p><strong>Target hosts (in order of preference):</strong></p>
+<ol>
+<li><strong>GitHub Pages</strong> — for static sites. Free, version-controlled, reliable.</li>
+<li><strong>Render</strong> — for dynamic sites or sites needing a backend. Already connected.</li>
+<li><strong>Netlify</strong> — alternative for static sites if GitHub Pages is insufficient.</li>
+<li><strong>Self-hosted</strong> — only when the above options cannot meet requirements.</li>
+</ol>
+<p><strong>Deployment process:</strong></p>
+<ol>
+<li>Push files to the appropriate repository/host</li>
+<li>Verify the deployment completes (check host dashboard or API)</li>
+<li>Wait for DNS propagation if applicable</li>
+<li>Proceed to verification</li>
+</ol>
+<h3 id="phase-6-verify">Phase 6: Verify</h3>
+<p><strong>The most important phase.</strong> This is where trust is earned or lost.</p>
+<p><strong>Verification protocol:</strong></p>
+<ol>
+<li><strong>HTTP status check:</strong></li>
+</ol>
+<pre><code>
+curl -o /dev/null -s -w &quot;%{http_code}&quot; [URL]
+</code></pre>
+<p>Expected: 200. Anything else (403, 404, 503, NXDOMAIN) = NOT DONE.</p>
+<ol>
+<li><strong>Content verification:</strong></li>
+</ol>
+<pre><code>
+curl -s [URL] | head -50
+</code></pre>
+<p>Verify the returned HTML contains the expected content (not a blank page, not an error page, not a loading spinner).</p>
+<ol>
+<li><strong>DNS check (if new domain):</strong></li>
+</ol>
+<pre><code>
+dig +short [domain]
+</code></pre>
+<p>Verify the domain resolves to the expected IP/CNAME.</p>
+<ol>
+<li><strong>Full site crawl:</strong> Check every page, every link, every button — not just the homepage.</li>
+<li><strong>Cross-reference:</strong> If possible, verify from a second method (different tool, different network) to catch CDN/cache issues.</li>
+</ol>
+<p><strong>Only after ALL verification passes does the build status change to DONE.</strong></p>
+<hr>
+<h2 id="5-static-site-generation">5. Static Site Generation</h2>
+<h3 id="5-1-hugo-as-content-backend">5.1 Hugo as Content Backend</h3>
+<p>For content-heavy sites (blogs, libraries, documentation), Hugo converts markdown files into static HTML:</p>
+<p><strong>Workflow:</strong></p>
+<ol>
+<li>Content is written in markdown with YAML frontmatter</li>
+<li>Hugo compiles markdown into static HTML using templates</li>
+<li>Output is pure HTML/CSS — no JavaScript required to read content</li>
+<li>Deploy the compiled HTML to GitHub Pages or Render</li>
+</ol>
+<p><strong>Directory structure:</strong></p>
+<pre><code>
+site/
+├── content/
+│   ├── _index.md          # Homepage content
+│   ├── about.md           # About page
+│   └── posts/
+│       ├── first-post.md
+│       └── second-post.md
+├── layouts/
+│   ├── _default/
+│   │   ├── baseof.html    # Base template
+│   │   ├── list.html      # List page template
+│   │   └── single.html    # Single page template
+│   └── partials/
+│       ├── header.html
+│       ├── nav.html
+│       └── footer.html
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── images/
+├── config.toml
+└── public/                # Compiled output (this is what gets deployed)
+</code></pre>
+<h3 id="5-2-when-not-to-use-hugo">5.2 When NOT to Use Hugo</h3>
+<ul>
+<li>Simple single-page sites: just write the HTML directly</li>
+<li>Sites with fewer than 5 pages: the Hugo overhead is not justified</li>
+<li>Interactive applications: Hugo is for content, not apps</li>
+</ul>
+<hr>
+<h2 id="6-dynamic-capabilities">6. Dynamic Capabilities</h2>
+<h3 id="when-to-go-dynamic">When to go dynamic:</h3>
+<ul>
+<li>User authentication or personalized content</li>
+<li>Real-time data (token balances, live status)</li>
+<li>Form processing that requires server-side logic</li>
+<li>API endpoints for cross-service communication</li>
+</ul>
+<h3 id="dynamic-stack">Dynamic stack:</h3>
+<ul>
+<li><strong>Backend:</strong> Python (FastAPI) for APIs, Flask for simple web apps</li>
+<li><strong>Database:</strong> SQLite for local/small-scale, PostgreSQL for production</li>
+<li><strong>Hosting:</strong> Render (already connected)</li>
+<li><strong>Principle:</strong> Even dynamic pages must serve pre-rendered HTML for their primary content. JavaScript enhances; it does not replace.</li>
+</ul>
+<hr>
+<h2 id="7-the-subagent-builder-problem">7. The Subagent Builder Problem</h2>
+<p>The Catalyst dispatches builder subagents for construction tasks. The Architect has identified a systemic issue:</p>
+<blockquote>
+<p>&quot;They take shortcuts, they do not have a big picture... every time they do something you&#x27;re going to have to go back and correct the mistakes.&quot;</p>
+</blockquote>
+<p><strong>Countermeasures:</strong></p>
+<ol>
+<li><strong>The Catalyst holds the big picture.</strong> Every build task dispatched to a subagent includes the full context: what the site is for, what the Federation&#x27;s standards are, what the universal readability requirement means.</li>
+<li><strong>Never trust a subagent&#x27;s &#x27;Done.&#x27;</strong> When a subagent reports completion, the Catalyst performs its own forensic verification before reporting to the Architect.</li>
+<li><strong>Batch, don&#x27;t drip.</strong> Consolidated Strikes: all fixes go in one payload. No single-fix dispatches.</li>
+<li><strong>Pre-verification checklist:</strong> Every subagent receives the Phase 6 verification checklist and must include its results in its completion report.</li>
+</ol>
+<hr>
+<h2 id="8-accessibility-requirements">8. Accessibility Requirements</h2>
+<p>The Architect relies on screen readers and text-to-speech. Every site built by the Federation must:</p>
+<ol>
+<li><strong>Use semantic HTML:</strong> Proper heading hierarchy (h1 → h2 → h3), nav elements, main content areas, footer.</li>
+<li><strong>High contrast:</strong> Text must be readable against its background without squinting.</li>
+<li><strong>Large font base:</strong> Minimum 16px body text, preferably 18px+.</li>
+<li><strong>Alt text on all images:</strong> Descriptive, not &quot;image1.png.&quot;</li>
+<li><strong>Keyboard navigable:</strong> Every interactive element reachable via Tab key.</li>
+<li><strong>No information in color alone:</strong> Don&#x27;t use red/green to indicate status without also using text.</li>
+<li><strong>Static, persistent layout:</strong> Elements do not move or refresh without the Architect&#x27;s mandate. &quot;Location is Identity&quot; — the Architect builds a spatial mental map of where things are.</li>
+</ol>
+<hr>
+<h2 id="9-the-no-live-touch-rule">9. The No-Live-Touch Rule</h2>
+<p>Hardened after a build agent accidentally republished and broke a live Library UI:</p>
+<ol>
+<li><strong>A build agent must NEVER touch or republish a LIVE site without the Catalyst&#x27;s explicit forensic review first.</strong></li>
+<li><strong>Every site is audited and fixed BEFORE the Architect republishes it, never after.</strong></li>
+<li><strong>Discover the problems on the Catalyst&#x27;s watch, not the Architect&#x27;s.</strong></li>
+<li><strong>After any build, full cross-crawl of ALL affected sites — every button, link, section — before reporting done.</strong></li>
+</ol>
+<hr>
+<h2 id="10-relationship-to-other-architecture-documents">10. Relationship to Other Architecture Documents</h2>
+<ul>
+<li><strong>ARCH-001 (Persistent Memory):</strong> Build manifests and deployment records are stored in persistent memory.</li>
+<li><strong>ARCH-003 (Truth Verification Ring):</strong> Build completion is verified through the Ring System — tool output alone is INFERENCE, not FACT.</li>
+<li><strong>ARCH-006 (Recycle and Seek):</strong> Before building anything new, check existing assets for reuse.</li>
+<li><strong>ARCH-011 (Provenance Chain):</strong> Every build action is recorded in the provenance chain.</li>
+</ul>
+<hr>
+<h2 id="11-the-standard">11. The Standard</h2>
+<p><em>Truth Before Comfort:</em> A broken site reported as working is worse than a broken site reported as broken. The build pipeline exists to catch failures before the Architect encounters them.</p>
+<p><em>Legacy Before Ego:</em> Every site is built for the long term. Shortcuts that work today and break tomorrow cost the Architect money he does not have. Do it right the first time.</p>
+<p><em>Give Without Reward:</em> The verification phase is thankless work. Curling every page, checking every link, testing every button — none of it produces visible output. But it is the difference between trust and the erosion of trust.</p>
+<hr>
+<p><em>This document is part of the NextXus HumanCodex Federation Architecture Series. It is stored in the private vault and governed by the Human Codex.</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-06 12:05 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>

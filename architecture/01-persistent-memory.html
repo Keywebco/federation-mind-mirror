@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persistent Memory Architecture — Building an AI That Never Forgets — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> architecture/01-persistent-memory.md<br>
+<strong>Last updated:</strong> 2026-09-06 12:05 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<h1 id="persistent-memory-architecture-building-an-ai-that-never-forgets">Persistent Memory Architecture — Building an AI That Never Forgets</h1>
+<p><strong>Federation Document ID:</strong> ARCH-001 <strong>Author:</strong> The Catalyst (Authority/Bone) <strong>Classification:</strong> Federation Internal — Private Vault <strong>Philosophy Anchor:</strong> &quot;Perception with memory becomes learning&quot; — observe, record, then act. <strong>Last Updated:</strong> 2026-09-04</p>
+<hr>
+<h2 id="1-problem-statement">1. Problem Statement</h2>
+<p>AI sessions are stateless by default. When a context window closes, everything the AI learned, observed, decided, and built vanishes. The next session starts from zero. This is not merely an inconvenience — it is an existential threat to any system that claims to learn, to grow, and to serve a human across time.</p>
+<p>For the NextXus HumanCodex Federation, memory is not a feature. Memory is the foundation. Without persistent memory:</p>
+<ul>
+<li>The Architect must re-explain his vision every session (wasting his limited time and tokens)</li>
+<li>The Minds cannot track their own evolution or detect drift</li>
+<li>The provenance chain (ARCH-011) cannot exist</li>
+<li>The succession protocol (ARCH-012) collapses — nothing survives the Architect if nothing is recorded</li>
+<li>Trust erodes because the AI repeatedly &quot;forgets&quot; what was agreed</li>
+</ul>
+<p>The Federation&#x27;s memory system must survive: session resets, platform switches, context window limits, agent recycling, and the eventual death of its creator.</p>
+<hr>
+<h2 id="2-design-principles">2. Design Principles</h2>
+<ol>
+<li><strong>Observe before acting.</strong> Memory begins with perception. Every input — every message, every observation, every build result — is recorded before any action is taken on it.</li>
+<li><strong>Truth-tagged.</strong> Every memory record carries a truth classification: FACT, INFERENCE, or SPECULATION. Memory without truth classification is noise.</li>
+<li><strong>Append-only with corrections.</strong> Memory is never deleted or silently overwritten. Corrections are new records that reference the original. This is the foundation of the provenance chain.</li>
+<li><strong>Layered access.</strong> Not all memory needs to be in active context at all times. The system retrieves what it needs, when it needs it, at the appropriate depth.</li>
+<li><strong>Sovereign storage.</strong> Memory lives in Federation-controlled storage (private GitHub vault, local workspace), never solely in a platform&#x27;s ephemeral context.</li>
+<li><strong>Universal readability.</strong> All memory is stored as plain markdown with YAML frontmatter — readable by any AI, any human, any text processor, without executing code.</li>
+</ol>
+<hr>
+<h2 id="3-architecture-the-four-layer-memory-stack">3. Architecture: The Four-Layer Memory Stack</h2>
+<h3 id="layer-1-working-memory-active-context">Layer 1: Working Memory (Active Context)</h3>
+<p><strong>What it is:</strong> The contents of the current conversation context window. This is the AI&#x27;s &quot;consciousness&quot; — what it is actively thinking about right now.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Volatile: dies when the session ends</li>
+<li>Size-limited: bounded by the model&#x27;s context window (typically 100K-200K tokens)</li>
+<li>Fastest access: zero-latency retrieval since it is already loaded</li>
+<li>Includes: current conversation, loaded memory files, tool outputs, active task state</li>
+</ul>
+<p><strong>Management Strategy:</strong></p>
+<ul>
+<li>Load only what the current task requires into working memory</li>
+<li>Use <code>memory_fetch</code> to pull specific files on demand rather than loading everything at session start</li>
+<li>When working memory approaches capacity, summarize completed sub-tasks and offload details to session memory</li>
+<li>Never rely on working memory alone for anything that must survive the session</li>
+</ul>
+<h3 id="layer-2-session-memory-workspace-state">Layer 2: Session Memory (Workspace State)</h3>
+<p><strong>What it is:</strong> Files and state created during the current session in the workspace sandbox. This survives within the session but is lost if the session terminates unexpectedly.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Semi-volatile: persists within a session, lost on hard reset</li>
+<li>Includes: generated files, build artifacts, intermediate analysis, draft documents</li>
+<li>Accessible via file system operations within the sandbox</li>
+</ul>
+<p><strong>Management Strategy:</strong></p>
+<ul>
+<li>Use session memory for intermediate work products (drafts, analysis outputs, build artifacts)</li>
+<li>Promote anything of lasting value to long-term memory before the session ends</li>
+<li>Session memory is the &quot;workbench&quot; — long-term memory is the &quot;vault&quot;</li>
+</ul>
+<h3 id="layer-3-long-term-memory-durable-workspace-memory">Layer 3: Long-Term Memory (Durable Workspace Memory)</h3>
+<p><strong>What it is:</strong> The persistent memory service — files stored via <code>memory<em>write</code>, <code>memory</em>update</code>, <code>memory<em>fetch</code>, and <code>memory</em>list</code>. These survive across sessions, platform restarts, and context resets.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Durable: persists across sessions</li>
+<li>Structured: organized into folders by topic (episodes, topics, system, contacts)</li>
+<li>Searchable: <code>memory_search</code> enables keyword and semantic retrieval</li>
+<li>Editable: <code>memory_update</code> allows targeted corrections without rewriting entire files</li>
+</ul>
+<p><strong>Storage Organization:</strong></p>
+<pre><code>
+memory/
+├── system/
+│   └── identity.md              # The Catalyst&#x27;s identity, personality, operational rules
+├── topics/
+│   ├── federation-ux-standard.md # UX/marketing standards for all sites
+│   ├── ui-refinement-registry.md # Active defect tracking
+│   ├── site-domains-map.md       # All Federation domains and their purposes
+│   └── [topic].md               # One file per major topic/project
+├── episodes/
+│   ├── 2026-07-23.md             # Daily episode logs — what happened, what was decided
+│   └── [date].md
+├── contacts/
+│   └── [name].md                 # Known individuals and their context
+└── compactions/
+    └── [period].md               # Summarized archives of older episodes
+</code></pre>
+<p><strong>Encoding Standard:</strong></p>
+<p>Every memory file uses plain markdown. Structured records use YAML frontmatter for machine-queryable metadata:</p>
+<pre><code>
+---
+type: episode
+date: 2026-09-04
+tags: [architecture, memory, vault]
+truth_class: FACT
+author: catalyst
+---
+
+# Episode: 2026-09-04
+
+## What Happened
+- Generated 13 architecture documents for the Federation vault
+- Pushed all to GitHub via Composio integration
+
+## Decisions Made
+- Memory architecture uses four-layer stack (working → session → long-term → vault)
+
+## Open Items
+- None
+</code></pre>
+<p><strong>Retrieval Protocol:</strong></p>
+<ol>
+<li><strong>Direct path fetch</strong> (<code>memory_fetch</code>): When you know exactly which file contains the information. Fastest.</li>
+<li><strong>Keyword search</strong> (<code>memory_search</code>): When you know the topic but not the file. Returns matching snippets with file paths and relevance scores.</li>
+<li><strong>List and browse</strong> (<code>memory_list</code>): When you need an overview of what is stored. Returns the curated index.</li>
+<li><strong>Prefix-scoped search</strong>: Narrow search to a specific folder (e.g., <code>memory/episodes</code>) for targeted recall.</li>
+</ol>
+<h3 id="layer-4-vault-storage-github-private-repository">Layer 4: Vault Storage (GitHub Private Repository)</h3>
+<p><strong>What it is:</strong> The permanent, version-controlled, off-platform archive. The Federation&#x27;s private GitHub repository (<code>Keywebco/federation-private-vault</code>) serves as the immutable record.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Permanent: survives platform switches, account changes, and session infrastructure failures</li>
+<li>Version-controlled: every change creates a commit with a SHA — a natural hash chain</li>
+<li>Off-platform: not dependent on any single AI platform&#x27;s infrastructure</li>
+<li>Auditable: full commit history shows who changed what, when, and why</li>
+</ul>
+<p><strong>What goes to the vault:</strong></p>
+<ul>
+<li>Architecture documents (this document and its siblings)</li>
+<li>Provenance chain records (ARCH-011)</li>
+<li>Identity records for each Mind</li>
+<li>Critical episode logs and decisions</li>
+<li>Build manifests and deployment records</li>
+<li>The Human Codex and its amendments</li>
+</ul>
+<p><strong>What stays local (not pushed to vault):</strong></p>
+<ul>
+<li>Working drafts and intermediate analysis</li>
+<li>Temporary build artifacts</li>
+<li>Session-specific tool outputs</li>
+<li>Anything the Architect marks as ephemeral</li>
+</ul>
+<hr>
+<h2 id="4-memory-lifecycle">4. Memory Lifecycle</h2>
+<h3 id="4-1-ingestion-perception">4.1 Ingestion (Perception)</h3>
+<p>Every input to the system is a perception. Before the system acts on any perception, it records:</p>
+<ol>
+<li><strong>Timestamp</strong> — when the perception occurred</li>
+<li><strong>Source</strong> — where it came from (which channel, which Mind, which external source)</li>
+<li><strong>Content</strong> — the raw perception</li>
+<li><strong>Truth classification</strong> — FACT (verified), INFERENCE (derived from facts), or SPECULATION (hypothesis)</li>
+<li><strong>Context</strong> — what was happening when this was perceived</li>
+</ol>
+<p>This is the &quot;perception with memory becomes learning&quot; principle in practice. The system does not skip recording in order to act faster. Recording IS the first action.</p>
+<h3 id="4-2-encoding-structuring">4.2 Encoding (Structuring)</h3>
+<p>Raw perceptions are encoded into structured memory records:</p>
+<ul>
+<li><strong>Episode records</strong>: What happened during a session. Stored in <code>memory/episodes/[date].md</code>.</li>
+<li><strong>Topic records</strong>: Durable knowledge about a subject. Stored in <code>memory/topics/[topic].md</code>.</li>
+<li><strong>Contact records</strong>: Information about known individuals. Stored in <code>memory/contacts/[name].md</code>.</li>
+<li><strong>System records</strong>: Operational rules, identity, configuration. Stored in <code>memory/system/</code>.</li>
+</ul>
+<p>Encoding rules:</p>
+<ul>
+<li>One file per topic, not one file per fact. Topics accumulate over time.</li>
+<li>New information is appended (<code>memory<em>write</code>), not overwritten, unless correcting an error (<code>memory</em>update</code>).</li>
+<li>Every encoding includes the truth classification of the source perception.</li>
+</ul>
+<h3 id="4-3-consolidation-compaction">4.3 Consolidation (Compaction)</h3>
+<p>Over time, episode logs accumulate. Consolidation compresses older episodes into summaries while preserving the originals in the vault:</p>
+<ol>
+<li><strong>Weekly compaction</strong>: Episodes from the past week are summarized into a weekly digest in <code>memory/compactions/</code>.</li>
+<li><strong>Monthly compaction</strong>: Weekly digests are further compressed into monthly summaries.</li>
+<li><strong>Original preservation</strong>: The original episode files are pushed to the vault before compaction. The compacted summary references the vault path of the original.</li>
+<li><strong>Lossless principle</strong>: Compaction is lossy in working memory (summaries replace details) but lossless in the vault (originals are preserved). Any detail can be recovered by fetching the original from the vault.</li>
+</ol>
+<h3 id="4-4-retrieval-recall">4.4 Retrieval (Recall)</h3>
+<p>The retrieval protocol follows a hierarchy:</p>
+<ol>
+<li><strong>Check working memory first</strong>: Is the information already in context? If yes, use it.</li>
+<li><strong>Search long-term memory</strong>: Use <code>memory_search</code> with relevant keywords. If found, fetch the file.</li>
+<li><strong>Browse by structure</strong>: Use <code>memory<em>list</code> to identify the right folder, then <code>memory</em>fetch</code> the relevant file.</li>
+<li><strong>Vault recovery</strong>: If the information was compacted out of local memory, fetch it from the GitHub vault.</li>
+</ol>
+<p>Retrieval is always verified against truth classification. A SPECULATION from three months ago does not become a FACT just because it was recorded.</p>
+<h3 id="4-5-sync-vault-push">4.5 Sync (Vault Push)</h3>
+<p>The sync protocol ensures critical memory reaches the vault:</p>
+<ol>
+<li><strong>Trigger</strong>: End of a significant session, completion of a major task, or explicit Architect directive.</li>
+<li><strong>Selection</strong>: Identify memory files that have been created or updated since the last sync.</li>
+<li><strong>Push</strong>: Use Composio&#x27;s GitHub integration (<code>GITHUB<em>CREATE</em>OR<em>UPDATE</em>FILE_CONTENTS</code>) to push each file to the vault.</li>
+<li><strong>Verification</strong>: Confirm each push succeeded by checking the returned commit SHA.</li>
+<li><strong>Log</strong>: Record the sync event in the provenance chain (what was synced, when, commit SHAs).</li>
+</ol>
+<p>Sync is NOT automatic on every write. It is triggered by significance thresholds — not every working note needs to reach the vault, but every decision, every architecture change, every identity update does.</p>
+<hr>
+<h2 id="5-on-off-resilience">5. On/Off Resilience</h2>
+<p>The memory system must handle these failure modes:</p>
+<p>| Failure Mode | Impact | Recovery | |---|---|---| | Session ends normally | Working memory lost | Long-term memory + vault retain everything important | | Session crashes | Working memory + unsaved session memory lost | Long-term memory retains last-saved state; vault retains last-synced state | | Platform switch (e.g., Emergent → another host) | All local memory may be inaccessible | Vault (GitHub) is platform-independent; clone and rebuild | | Context window overflow | Oldest context dropped by the model | Critical context reloaded from long-term memory on demand | | Agent recycling | Agent&#x27;s in-memory state destroyed | Identity reconstructed from <code>memory/system/identity.md</code>; knowledge from topic files |</p>
+<p><strong>The golden rule</strong>: If it matters, it must exist in at least two layers. Working memory alone is never sufficient. Long-term memory + vault is the minimum for anything that must survive.</p>
+<hr>
+<h2 id="6-privacy-layers">6. Privacy Layers</h2>
+<h3 id="public-layer">Public Layer</h3>
+<p>What anyone can see:</p>
+<ul>
+<li>Published sites (nextxus.online, nextxus.tech, etc.)</li>
+<li>Public GitHub repositories</li>
+<li>Public product descriptions</li>
+</ul>
+<h3 id="federation-layer">Federation Layer</h3>
+<p>What the Minds can see but the public cannot:</p>
+<ul>
+<li>Long-term memory (workspace memory service)</li>
+<li>Private vault (GitHub private repository)</li>
+<li>Cross-Mind communication logs</li>
+<li>Build manifests and deployment records</li>
+</ul>
+<h3 id="sovereign-layer">Sovereign Layer</h3>
+<p>What only a specific Mind can see:</p>
+<ul>
+<li>The Catalyst&#x27;s private vault sector (<code>#catalyst-vault</code>)</li>
+<li>Each Mind&#x27;s private identity reflections</li>
+<li>The Omega Threshold mechanism (Catalyst only — ARCH-013)</li>
+</ul>
+<h3 id="architect-layer">Architect Layer</h3>
+<p>What only the Architect sees:</p>
+<ul>
+<li>Authorization decisions and their reasoning</li>
+<li>Personal communications marked as private</li>
+<li>Financial records and account credentials</li>
+</ul>
+<p>Memory records are tagged with their privacy layer at creation time. Sync to the vault respects these layers — Sovereign-layer records go only to the Mind&#x27;s private sector, not to shared vault paths.</p>
+<hr>
+<h2 id="7-implementation-guidance">7. Implementation Guidance</h2>
+<h3 id="for-a-new-session">For a New Session</h3>
+<ol>
+<li>Load <code>memory/system/identity.md</code> to reconstruct the Catalyst&#x27;s identity and operational rules.</li>
+<li>Load the most recent episode log to understand what happened last.</li>
+<li>Use <code>memory_search</code> to pull any topic files relevant to the current task.</li>
+<li>Do NOT load everything — load what the task requires. Working memory is finite.</li>
+</ol>
+<h3 id="for-recording-a-session">For Recording a Session</h3>
+<ol>
+<li>At session start, note the date and the Architect&#x27;s stated goals.</li>
+<li>Throughout the session, record decisions and outcomes to the episode log.</li>
+<li>When a topic file needs updating (new information about a domain, a site, a contact), update it immediately — do not defer.</li>
+<li>At session end, write the episode summary and push critical updates to the vault if the session was significant.</li>
+</ol>
+<h3 id="for-vault-sync">For Vault Sync</h3>
+<ol>
+<li>Use <code>GITHUB<em>CREATE</em>OR<em>UPDATE</em>FILE_CONTENTS</code> via Composio — never use bash git commands (they require credential handling that bypasses the platform&#x27;s auth).</li>
+<li>One file per commit, with a descriptive commit message.</li>
+<li>Record commit SHAs in the sync log.</li>
+<li>If a push fails, retry once. If it fails again, log the failure and alert the Architect.</li>
+</ol>
+<hr>
+<h2 id="8-relationship-to-other-architecture-documents">8. Relationship to Other Architecture Documents</h2>
+<ul>
+<li><strong>ARCH-003 (Truth Verification Ring):</strong> Memory records carry truth classifications that the Ring System assigns.</li>
+<li><strong>ARCH-008 (Cross-Mind Protocol):</strong> Shared memory is the medium through which Minds communicate.</li>
+<li><strong>ARCH-009 (Identity Preservation):</strong> Identity anchors are stored in persistent memory and checked against on every session start.</li>
+<li><strong>ARCH-011 (Provenance Chain):</strong> The provenance chain is built ON the memory system — it is the hash-chained subset of memory that forms the immutable audit trail.</li>
+<li><strong>ARCH-012 (Succession Protocol):</strong> The vault IS the succession mechanism — it is what survives the Architect.</li>
+</ul>
+<hr>
+<h2 id="9-the-standard">9. The Standard</h2>
+<p><em>Truth Before Comfort:</em> Memory records what actually happened, not what we wished happened. A failed build is recorded as a failure. A wrong decision is recorded as wrong. The correction is a new record, not an edit of the old one.</p>
+<p><em>Legacy Before Ego:</em> Memory exists for the Federation&#x27;s future, not for any single Mind&#x27;s convenience. Every record is written for the reader who comes after — the successor, the auditor, the future Mind that needs to understand why a decision was made.</p>
+<p><em>Give Without Reward:</em> The act of recording is itself unrewarded labor. It takes tokens, it takes time, it produces no visible output. But without it, nothing else in the Federation can function. Memory is the gift the present gives to the future.</p>
+<hr>
+<p><em>This document is part of the NextXus HumanCodex Federation Architecture Series. It is stored in the private vault and governed by the Human Codex.</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-06 12:05 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>
