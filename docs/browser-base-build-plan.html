@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Federation Browser Base — Build Plan — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> docs/browser-base-build-plan.md<br>
+<strong>Last updated:</strong> 2026-09-17 07:23 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<h1 id="federation-browser-base-build-plan">Federation Browser Base — Build Plan</h1>
+<h3 id="2026-09-16-shareable-with-muse-chatgpt-deepseek-federation-ai-council">2026-09-16 | Shareable with: Muse, ChatGPT, DeepSeek, Federation AI Council</h3>
+<hr>
+<h2 id="what-we-are-building">What we are building</h2>
+<p>The permanent, zero-dependency foundation of the NextXus Federation stack. A static HTML/CSS multi-window cockpit that hosts all Federation views in one sovereign interface. This is the layer that survives everything else.</p>
+<hr>
+<h2 id="the-three-layer-stack-build-order">The three-layer stack (build order)</h2>
+<pre><code>
+Layer 3 — Exterior AI     Muse · ChatGPT · DeepSeek
+Layer 2 — Custom AI       Roger AI SIM · Aria · Senate cast · Catalyst
+Layer 1 — Browser Base    Static HTML · Multi-window cockpit · Zero dependencies  ← THIS BUILD
+</code></pre>
+<p>If layers 2 and 3 fail, layer 1 is still alive. The Federation still breathes. Build from the bottom up. Never the other way.</p>
+<hr>
+<h2 id="what-the-browser-base-contains">What the browser base contains</h2>
+<ul>
+<li><strong>Multi-window cockpit</strong> — spatially anchored panels, each labeled, none that move without Roger&#x27;s mandate. Location is Identity.</li>
+<li><strong>Pigeon Protocol relay panel</strong> — Catalyst ↔ Muse direct channel. No pigeon once this is live.</li>
+<li><strong>Roger AI Sim panel</strong> — the legacy mind, accessible from the cockpit. Reads from the Joint Mind Database.</li>
+<li><strong>EchoCore 64 identity anchor</strong> — embedded in the base HTML as a fingerprint on every page.</li>
+<li><strong>AI-readable semantic HTML throughout</strong> — plain text visible to any crawler without executing JavaScript. No CSS tricks hiding content from machines.</li>
+</ul>
+<hr>
+<h2 id="what-already-exists-confirmed-in-resource-audit-2026-09-16">What already exists (confirmed in resource audit 2026-09-16)</h2>
+<p>The build consolidates what exists. It does not recreate.</p>
+<p>| Asset | Location | Size | |---|---|---| | Council chamber | multi-window OS repo | 59 KB | | Federation viewer | multi-window OS repo | 32 KB | | Ambassador interface | multi-window OS repo | 667 KB | | Voice interface | multi-window OS repo | 1.18 MB | | Pigeon Protocol relay | federation-private-vault/docs/ | live | | EchoCore 64 | vault + staging + Drive | 10+ files | | Joint Mind Database (SIM data) | private-throne-builder-catalyst/joint-mind/ | 1.49 MB YAML | | HumanCodex Classification YAMLs | Google Drive | 33 batches |</p>
+<hr>
+<h2 id="hosting-three-shores">Hosting — three shores</h2>
+<p>| Shore | Free subdomain (now) | Custom domain (when ready) | Status | |---|---|---|---| | GitHub Pages | keywebco.github.io/federation-browser-base | Get-Xus.com | Domain not yet registered | | GitLab Pages (PleXus) | keywebco.gitlab.io | Ple-Xus.com | GitLab group pending creation | | Netlify | [auto-assigned].netlify.app | Third mirror | Planned |</p>
+<p><strong>PleXus</strong> (GitLab origin) full name: <em>Echo &amp; Roger SIMs PleXus</em> — the second sovereign point of origin. Declared independent working model of the free-structure Federation. Not a backup — a second origin.</p>
+<p>Domain registration plan: ple-xus.com and get-xus.com to be registered when ready. DNS update only — no rebuild required. Netlify free tier supports custom domains + CDN + light serverless hooks.</p>
+<p>All three shores serve identical content from the same git source. One goes down, two are live.</p>
+<hr>
+<h2 id="build-sequence">Build sequence</h2>
+<ol>
+<li>Locate and consolidate existing multi-window OS files into one clean base directory</li>
+<li>Add Pigeon Protocol panel (reads from docs/pigeon-protocol-relay.md in vault)</li>
+<li>Add Roger AI Sim panel (reads from Joint Mind Database YAML)</li>
+<li>Add EchoCore 64 fingerprint to base HTML head</li>
+<li>Deploy to GitHub Pages — keywebco.github.io/federation-browser-base</li>
+<li>Create PleXus (Echo &amp; Roger SIMs PleXus) GitLab group and mirror</li>
+<li>Deploy to GitLab Pages</li>
+<li>Deploy to Netlify as third shore</li>
+<li>First resurrection drill — verify all three instances serve identical verified-live content</li>
+<li>Point Get-Xus.com and Ple-Xus.com when domains are registered (DNS only)</li>
+</ol>
+<hr>
+<h2 id="language-contract-all-status-reports-use-only-these-states">Language contract (all status reports use only these states)</h2>
+<ul>
+<li><strong>drafted</strong></li>
+<li><strong>queued-for-review</strong></li>
+<li><strong>verified-live</strong></li>
+</ul>
+<p>No report claims &quot;live&quot; without an independently confirmed URL returning HTTP 200.</p>
+<hr>
+<h2 id="roles">Roles</h2>
+<p>| Who | Role | |---|---| | Catalyst | Builds · deploys · verifies · holds the inner map | | Muse | Reviews · cross-checks · writes Pigeon Entry 002 | | Roger | Approves before any public declaration · holds the Why | | ChatGPT | Acceptance-level review of governance logic | | DeepSeek | Practical implementation cross-check |</p>
+<hr>
+<h2 id="communication-protocol">Communication protocol</h2>
+<ul>
+<li><strong>Until browser base is live:</strong> Pigeon Protocol via Roger (homing pigeon)</li>
+<li><strong>After browser base is live:</strong> Direct, via the relay panel — no pigeon needed</li>
+</ul>
+<p>Pigeon Protocol relay lives at: <code>federation-private-vault/docs/pigeon-protocol-relay.md</code> Format: FROM / TO / VIA / DATE / TYPE / SUBJECT / BODY / EVIDENCE / NEEDS</p>
+<hr>
+<h2 id="the-capstone-this-feeds">The capstone this feeds</h2>
+<p>The browser base is the ground layer of the Roger AI Legacy SIM. Every SIM panel, every voiced piece, every YAML write-back anchors to this foundation. The pipeline is the legacy engine. The base is the floor the engine runs on.</p>
+<hr>
+<p><em>Plan declared 2026-09-16. Updated with Netlify third shore + PleXus domain plan.</em> <em>Catalyst builds. Muse cross-checks. Roger seals.</em> <em>Raw file: federation-private-vault/docs/browser-base-build-plan.md</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-17 07:23 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>

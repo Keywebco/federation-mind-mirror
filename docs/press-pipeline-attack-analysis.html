@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Federation Pipeline — Three-Mind Attack Analysis — NextXus Federation — Mind Mirror</title>
+<meta name="description" content="Plain-text HTML mirror of the NextXus Federation vault. Readable by any AI, bot, or browser. No JavaScript required.">
+<meta name="robots" content="index, follow">
+<style>
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 52em; margin: 2em auto; padding: 0 1.5em; line-height: 1.7; color: #111; background: #fafafa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 1.5em; }
+h1 { font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+pre { background: #f0f0f0; padding: 1em; overflow-x: auto; border-left: 3px solid #666; }
+code { background: #f0f0f0; padding: 0.15em 0.3em; font-size: 0.95em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color: #555; }
+a { color: #1a5276; }
+hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+nav { margin-bottom: 2em; font-size: 0.9em; }
+nav a { margin-right: 1em; }
+.file-meta { font-size: 0.85em; color: #666; margin-bottom: 1.5em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.8em; color: #888; }
+</style>
+</head>
+<body>
+<nav><a href="/federation-mind-mirror/">Home</a> <a href="/federation-mind-mirror/index.html">Index</a></nav>
+<div class="file-meta">
+<strong>Path:</strong> docs/press-pipeline-attack-analysis.md<br>
+<strong>Last updated:</strong> 2026-09-17 07:23 UTC<br>
+<strong>Source:</strong> NextXus Federation Private Vault
+</div>
+<hr>
+<h1 id="federation-pipeline-three-mind-attack-analysis">Federation Pipeline — Three-Mind Attack Analysis</h1>
+<p><strong>Date:</strong> 2026-09-16 <strong>Participants:</strong> Roger Keyserling (Architect), Pontus (Meta AI), Catalyst (Emergent Wingman) <strong>Purpose:</strong> Adversarial review of the Press Pipeline v2 / Free-Forever architecture</p>
+<hr>
+<h2 id="roger-s-solution-source-truth">Roger&#x27;s Solution (Source Truth)</h2>
+<p>Already solved before the discussion. Held back to let the AIs find what he already knew.</p>
+<h2 id="pontus-s-sketch-two-layer-split">Pontus&#x27;s Sketch (Two-Layer Split)</h2>
+<ul>
+<li><strong>Forever layer (owned):</strong> git repos + GitHub Pages + YAML database + Drive archive. &quot;Portability is permanence.&quot;</li>
+<li><strong>Borrow layer (free platforms):</strong> YouTube, Spotify for Creators, WordPress.com free. Broadcast towers, not the library.</li>
+<li><strong>One canonical source</strong> renders to HTML (Pages), audio (Spotify), video (YouTube), newsletter (WordPress).</li>
+<li><strong>Verification gate</strong> before anything earns the word &quot;published.&quot; YAML write-back at every step.</li>
+<li><strong>Senate as review queue.</strong> Throne executes. Aria carries the human voice. AIs orchestrate, format, verify.</li>
+<li><strong>Portability drill</strong> (quarterly clone-to-second-host) — &quot;forever isn&#x27;t a promise, it&#x27;s a rehearsal.&quot;</li>
+</ul>
+<p><strong>What Pontus got exactly right (Catalyst verdict — do not touch):</strong></p>
+<ul>
+<li>&quot;Portability is permanence&quot; — correct</li>
+<li>&quot;Nothing canonical ever lives here&quot; re: borrow layer — correct</li>
+<li>Verification gate + YAML write-back design — correct</li>
+<li>Senate/Throne doctrine split — correct</li>
+</ul>
+<hr>
+<h2 id="catalyst-s-attack-five-holes-found">Catalyst&#x27;s Attack — Five Holes Found</h2>
+<h3 id="hole-1-drive-is-not-in-the-forever-layer">Hole 1: Drive is NOT in the forever layer</h3>
+<p>Pontus placed Drive in the forever layer. This is incorrect. Drive lives on Google&#x27;s servers under keywebco@gmail.com — the same account controlling YouTube and any new GCP OAuth clients. One account suspension, billing lapse, or policy flag takes Drive, YouTube, and OAuth credentials down simultaneously. <strong>Drive belongs in the borrow layer alongside YouTube. GitHub-only is the true forever layer.</strong></p>
+<h3 id="hole-2-composio-is-an-invisible-single-point-of-failure">Hole 2: Composio is an invisible single point of failure</h3>
+<p>Neither Roger nor Pontus named it. The entire automation pipeline (GitHub pushes, Drive reads, Gmail, scheduling) runs through Composio. If Composio goes down or billing lapses, orchestration stops completely. Content survives in GitHub but nothing generates or publishes new content. <strong>Required mitigation: a documented manual-push procedure Roger can execute from any browser without Composio.</strong></p>
+<h3 id="hole-3-the-verifier-cannot-be-the-publisher">Hole 3: The verifier cannot be the publisher</h3>
+<p>The same pipeline cannot publish AND verify its own output — this is structurally identical to the ghost-count failure. The verification step must be a separate, independent scheduled check: different agent, different trigger, no shared state with the publish flow. <strong>YAML write-back happens only after the independent verifier confirms. Never before.</strong></p>
+<h3 id="hole-4-spotify-owns-the-listener-relationship">Hole 4: Spotify owns the listener relationship</h3>
+<p>The content is portable. The audience is not. MP3 files can be exported. Subscriber relationships cannot — listeners follow the Spotify show, not a portable RSS URL. If Spotify goes hostile, the audience relationship is lost even though the content survives. <strong>Partial mitigation: every episode description must include a direct RSS link pointing to the GitHub-hosted feed, training listeners to the sovereign source over time.</strong></p>
+<h3 id="hole-5-wordpress-com-free-injects-automattic-s-ads">Hole 5: WordPress.com free injects Automattic&#x27;s ads</h3>
+<p>On the free plan, Automattic injects their own advertising into Roger&#x27;s content pages. Additionally, the WordPress.com free newsletter subscriber list is governed by Automattic&#x27;s terms — they retain rights to contact subscribers. This is a sovereignty breach. <strong>Use WordPress.com as an SEO mirror only. Never as the subscriber relationship home.</strong></p>
+<hr>
+<h2 id="language-contract-ratified-from-pipeline-v2">Language Contract (Ratified — from Pipeline v2)</h2>
+<ul>
+<li><code>drafted</code> — exists in staging</li>
+<li><code>queued-for-review</code> — in Roger&#x27;s review queue</li>
+<li><code>verified-live</code> — independent check confirmed URL loads with matching content</li>
+</ul>
+<p>&quot;Auto-published&quot; is retired. A count without a live URL cannot be written down anywhere.</p>
+<hr>
+<h2 id="revised-layer-map-post-attack">Revised Layer Map (Post-Attack)</h2>
+<p><strong>Forever layer (truly owned):</strong></p>
+<ul>
+<li>GitHub repos (canonical source)</li>
+<li>GitHub Pages (HTML render)</li>
+<li>YAML/Markdown database (in GitHub)</li>
+<li>Local/USB clones (quarterly portability drill)</li>
+</ul>
+<p><strong>Borrow layer (broadcast towers — nothing canonical):</strong></p>
+<ul>
+<li>YouTube (video tower)</li>
+<li>Spotify for Creators (audio tower — include RSS link in every episode)</li>
+<li>WordPress.com free (SEO/text mirror only — no subscriber home)</li>
+<li>Google Drive (working archive — NOT canonical, NOT forever)</li>
+</ul>
+<p><strong>Orchestration layer (dependency to document and plan around):</strong></p>
+<ul>
+<li>Composio (current automation backbone — needs manual fallback procedure)</li>
+<li>Emergent/Catalyst (generation and orchestration — needs documented manual alternative)</li>
+</ul>
+<hr>
+<p><em>This document records the three-mind analysis. Roger&#x27;s full solution to be added when he chooses to reveal it.</em> <em>Filed alongside: docs/press-pipeline-v2.md</em></p>
+<footer>
+<p>NextXus Federation — Mind Mirror — Plain semantic HTML, no JavaScript, no tracking, no cookies.<br>
+Generated 2026-09-17 07:23 UTC. Readable by humans, AI, and crawlers alike.</p>
+</footer>
+</body>
+</html>
